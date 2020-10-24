@@ -1,0 +1,55 @@
+
+.form-wrapper{
+  background: #fff;
+  padding: 40px 20px;
+}
+
+.input-form > input{
+  color: #000;
+}
+
+.action-div{
+   display: flex;
+  margin: 24px auto;
+}
+
+.addbtn{
+  margin-right: 15px;
+}
+
+.date-style{
+  color: #000 !important;
+}
+
+.field-form{
+  display: block !important;
+}
+
+.help-block{
+  color: red;
+  margin-top: 10px;
+}
+
+.form-control[disabled]{
+  background-color: inherit !important;
+  color: #000;
+}
+
+.form-control:focus{
+  color: #000 !important;
+}
+
+.toolbar-div{
+  margin-bottom: 14px;
+}
+
+.toolbar-flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.clear-btn{
+  cursor: pointer;
+}
+
+

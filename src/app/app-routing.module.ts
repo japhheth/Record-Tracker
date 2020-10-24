@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UserComponent } from './pages/user/user.component';
+import { AddTransactionComponent } from './pages/add-transaction/add-transaction.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,17 @@ const routes: Routes = [
         path: 'user',
         loadChildren:
           './pages/user/user.component'
+      }
+    ]
+  },
+  {
+    path: 'add-transaction',
+    component: AddTransactionComponent,
+    children: [
+      {
+        path: 'add-transaction',
+        loadChildren:
+          './pages/add-transaction/add-transaction.component'
       }
     ]
   },

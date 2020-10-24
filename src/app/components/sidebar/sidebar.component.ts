@@ -16,8 +16,15 @@ export const ROUTES: RouteInfo[] = [
     class: ''
   },
   {
-    path: '/icons',
+    path: '/transactions',
     title: 'Transactions',
+    rtlTitle: 'الرموز',
+    icon: 'icon-coins',
+    class: ''
+  },
+  {
+    path: '/user',
+    title: 'user',
     rtlTitle: 'الرموز',
     icon: 'icon-coins',
     class: ''

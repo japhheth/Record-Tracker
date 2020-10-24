@@ -1,0 +1,77 @@
+
+
+<div class="content">
+  <div class="container form-wrapper">
+     <div class="toolbar-div">
+        <mat-toolbar class="toolbar-flex">
+          <span>{{authService.transactionForm.controls['$key'].value? 'Modify Transaction Record' : 'Add New Transaction Record' }}</span>
+          <mat-icon class="clear-btn" matSuffix aria-label="close" (click)="onClose()">close</mat-icon>
+      </mat-toolbar>
+     </div>
+      <form class="form row" #registerForm="ngForm" [formGroup]="authService.transactionForm">
+            <div class="col-md-6">
+                <div class="form-group input-form">
+                  <div>
+                    <mat-form-field appearance="fill" class="field-form">
+                      <mat-label>Choose a date</mat-label>
+                      <input matInput
+                             type="datetime"
+                             class="form-control"
+                             [matDatepicker]="picker"
+                             formControlName="transactionDate"
+                             required>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error class="help-block" *ngIf="!authService.transactionForm.get('transactionDate').valid && authService.transactionForm.get('transactionDate').touched">Please enter a valid date</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="form-group input-form">
+                    <mat-form-field appearance="fill" class="field-form">
+                        <mat-label>Payee Name</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="payeeName"
+                               class="form-control"
+                               required>
+                               <mat-error class="help-block" *ngIf="!authService.transactionForm.get('payeeName').valid && authService.transactionForm.get('payeeName').touched">Blank payee name</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group input-form">
+                    <mat-form-field appearance="fill" class="field-form">
+                        <mat-label>Amount</mat-label>
+                        <input matInput
+                               type="tel"
+                               formControlName="amount"
+                               class="form-control"
+                               #amount
+                               (keypress)="onKeyUp($event)"
+                               (blur)="formatAmount(authService.transactionForm.get('amount'))"
+                               placeholder="Amount"
+                               required>
+                               <mat-error class="help-block" *ngIf="!authService.transactionForm.get('amount').valid && authService.transactionForm.get('amount').touched">Blank amount field</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group input-form">
+                   <mat-form-field appearance="fill" class="field-form">
+                        <mat-label>Memo</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="memo"
+                               class="form-control"
+                               name="memo"
+                               required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="action-div">
+                <button class="btn addbtn" (click)="onAddTransaction()" [disabled]="!registerForm.form.valid">{{ btnState }}</button>
+                <button class="btn btn-danger" type="reset">Clear</button>
+            </div>
+      </form>
+  </div>
+
+
+</div>
