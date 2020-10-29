@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/japhheth/cardinalstone.git"
+    "url": ""
   },
   "keywords": [
     "cardinalstone pratical test"
@@ -23,9 +23,9 @@
   "author": "japhheth",
   "license": "",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/black-dashboard-angular/issues"
+    "url": ""
   },
-  "homepage": "https://demos.creative-tim.com/black-dashboard-angular/#/dashboard",
+  "homepage": "",
   "private": false,
   "dependencies": {
     "@angular/animations": "10.2.0",
