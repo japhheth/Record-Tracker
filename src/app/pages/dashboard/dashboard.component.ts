@@ -18,26 +18,25 @@ export class DashboardComponent implements OnInit {
   public clicked2: boolean = false;
   dataFromApi: any;
   transactionData: any[];
+  unformattedAmount: any;
+  sumOfAmounts: any;
 
   constructor(private authService: AuthServiceService) {}
 
   ngOnInit() {
-    // this.dataFromApi = this.authService.getTranactions()
-    // .subscribe(res => {
-    //   const arrayList = res.map(item => {
-    //     return {
-    //       $key: item.key,
-    //       ...item.payload.val()
-    //     };
-    //   });
-    // });
+    this.dataFromApi = this.authService.getTranactions()
+    .subscribe(res => {
+      const arrayList = res.map(item => {
+        return {
+          $key: item.key,
+          ...item.payload.val()
+        };
+      });
+      this.transactionData = arrayList;
+      this.getTransactionAmounts();
+    });
 
 
-    // const newArr = this.transactionData.map(x => {
-    //      return x.transactionDate;
-    // });
-
-    //console.log(newArr, 'new array');
 
 
 
@@ -340,7 +339,7 @@ export class DashboardComponent implements OnInit {
     gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
 
     var data = {
-      labels: ['2017', '2018', '2019', '2020'],
+      labels: [2017, 2018, 2019, 2020],
       datasets: [{
         label: 'Data',
         fill: true,
@@ -351,12 +350,12 @@ export class DashboardComponent implements OnInit {
         borderDashOffset: 0.0,
         pointBackgroundColor: '#00d6b4',
         pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#ec250d',
+        pointHoverBackgroundColor: '#ec250d14',
         pointBorderWidth: 20,
         pointHoverRadius: 4,
         pointHoverBorderWidth: 15,
         pointRadius: 4,
-        data: [ 3000, 20000, 15000, 40000],
+        data: [ 3000, 10000, 12000, 14000],
       }]
     };
 
@@ -365,6 +364,7 @@ export class DashboardComponent implements OnInit {
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipRed
     });
+
 
 
     this.canvas = document.getElementById('chartLineGreen');
@@ -377,7 +377,7 @@ export class DashboardComponent implements OnInit {
     gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)'); //green colors
     gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
 
-    var data = {
+    var data1 = {
       labels: ['FEB', 'JUNE', 'SEP', 'NOV'],
       datasets: [{
         label: 'Yearly contributions',
@@ -394,13 +394,13 @@ export class DashboardComponent implements OnInit {
         pointHoverRadius: 4,
         pointHoverBorderWidth: 15,
         pointRadius: 4,
-        data: [2000, 6000, 4000, 12000, 10000],
+        data: [2000, 6000, 4000, 12000, 15000],
       }]
     };
 
     var myChart = new Chart(this.ctx, {
       type: 'line',
-      data: data,
+      data: data1,
       options: gradientChartOptionsConfigurationWithTooltipGreen
 
     });
@@ -490,5 +490,40 @@ export class DashboardComponent implements OnInit {
   public updateOptions() {
     this.myChartData.data.datasets[0].data = this.data;
     this.myChartData.update();
+  }
+
+  getTransactionAmounts(){
+    const firstArray = [];
+    const secondArray = [];
+    const y = this.transactionData.some(item => {
+       firstArray.push(item.amount);
+    });
+
+    for (var i = 0; i < firstArray.length; i++){
+        var t = firstArray[i].split(',').join('');
+        secondArray.push(parseInt(t));
+    }
+
+    this.sumOfAmounts = secondArray.reduce((a, b) => {
+      return a + b;
+    });
+
+    this.unformattedAmount = secondArray.reduce((a, b) => {
+      return a + b;
+    });
+
+    this.formatAmount(this.sumOfAmounts);
+  }
+
+  formatAmount(amount) {
+    if (amount) {
+      const amountToBeFormatted = amount.toString();
+      let amt = amountToBeFormatted.replace(/,/g, '');
+      amt = amountToBeFormatted.replace(/[&\/\\#,+()$~%'":*?<>{}-]/g, '');
+      amt = amountToBeFormatted.replace(/[^\d.]/g, '');
+      this.sumOfAmounts = amountToBeFormatted.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+
   }
 }

@@ -30,3 +30,11 @@ mat-footer-row mat-footer-cell{
   display: flex;
   justify-content: space-between;
 }
+
+
+@media (max-width: 767px){
+   .search-div{
+      justify-content: unset;
+      flex-direction: column;
+   }
+}

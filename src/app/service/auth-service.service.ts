@@ -37,7 +37,6 @@ export class AuthServiceService {
   }
 
   addTransaction(transaction: TransactionModels){
-    console.log(transaction, 'this is the api');
     console.log(typeof(transaction.transactionDate));
     this.transactionList = this.firebase.list('/transactions');
     if  (this.transactionList){
@@ -66,9 +65,6 @@ export class AuthServiceService {
 
   populate(transactionData){
     this.transactionForm.setValue(transactionData);
-
-
-
   }
 
 

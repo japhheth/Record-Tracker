@@ -6,7 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import {AuthServiceService} from '../../service/auth-service.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddTransactionComponent} from '../add-transaction/add-transaction.component';
+import {NotificationService} from '../../shared/notification.service';
 import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -24,25 +26,28 @@ export class TransactionsComponent implements OnInit {
   closeResult: string;
 
 
-  constructor(private authService: AuthServiceService, private matDialog: MatDialog) { }
+  constructor(private authService: AuthServiceService, private matDialog: MatDialog, public notificationService: NotificationService) { }
 
   ngOnInit(){
+
+    // ---------- Get transactions -----------------------
+
     this.transactionsFromApi = this.authService.getTranactions()
     .subscribe(list => {
-      const array = list.map(item => {
-        return{
-          $key: item.key,
-          ...item.payload.val()
-        };
-      });
-      this.dataSource = new MatTableDataSource(array);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+          const array = list.map(item => {
+            return {
+              $key: item.key,
+              ...item.payload.val()
+            };
+          });
+          this.dataSource = new MatTableDataSource(array);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
     });
-
-    console.log(this.transactionsFromApi, 'transaction from firebase');
   }
 
+
+  // ----------------- Clear search -------------------
 
   onSearchClear(){
     this.searchKey = '';
@@ -50,11 +55,12 @@ export class TransactionsComponent implements OnInit {
   }
 
 
+  // ----------------- filter search ------------------
   filterSearch(){
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
   }
 
-
+  // ----------- Initialize transaction ---------------
   onCreate(){
     this.authService.inititializeFormGroup();
     const dialogConfig = new MatDialogConfig();
@@ -63,6 +69,7 @@ export class TransactionsComponent implements OnInit {
     this.matDialog.open(AddTransactionComponent, dialogConfig);
   }
 
+  // ------------- Modify Transaction record ------
   onEdit(row){
     this.authService.populate(row);
     const dialogConfig = new MatDialogConfig();
@@ -71,6 +78,7 @@ export class TransactionsComponent implements OnInit {
     this.matDialog.open(AddTransactionComponent, dialogConfig);
   }
 
+  // ----------------Delete record -------------------
   onDelete($key){
 
     Swal.fire({
@@ -78,19 +86,16 @@ export class TransactionsComponent implements OnInit {
       text: `You won't be able to revert this!`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: '#14141F',
+      cancelButtonColor: ' #f44336',
+      confirmButtonText: 'Yes, delete it!',
+      allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        );
+        this.authService.deleteTransaction($key);
+        this.notificationService.success(':: Deleted successfully');
       }
     });
-    //this.authService.deleteTransaction($key);
   }
 
 

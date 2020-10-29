@@ -16,20 +16,19 @@ export class AddTransactionComponent implements OnInit {
               public notificationService: NotificationService) { }
 
   ngOnInit() {
-    console.log(this.authService.transactionForm.value.$key, 'key');
     this.btnState = this.authService.transactionForm.value.$key ? 'Modify' : 'Add';
-
   }
 
 
+  // ------------------ Prevent letters-----------
   onKeyUp(evt): boolean{
-    console.log(evt, 'evt');
     const charCode = evt.which ? evt.which : evt.keyCode;
     return (charCode > 31 && (charCode < 48 || charCode > 57)) ? false : true;
 
   }
 
 
+  // ------------Format amount ----------------
   formatAmount(evt) {
     const amtVal = evt.value;
     if (amtVal) {
@@ -42,11 +41,11 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
+
+  // ------------------Add Transaction---------------
   onAddTransaction(){
-    console.log(this.authService.transactionForm.value, 'transaction');
     if (this.authService.transactionForm.valid){
         if (this.authService.transactionForm.get('$key').value){
-            console.log('updating');
             this.authService.updateTransaction(this.authService.transactionForm.value);
             this.notificationService.success(':: Updated successfully');
             this.authService.transactionForm.reset();
@@ -61,6 +60,7 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
+  // ---------------- Reset Form input ----------------
   onClose(){
     this.authService.transactionForm.reset();
     this.authService.inititializeFormGroup();

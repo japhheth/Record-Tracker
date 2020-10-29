@@ -1,0 +1,16 @@
+.card{
+      height: 460px !important;
+}
+
+.profile-url > i{
+    color: #fff !important;
+}
+
+.description{
+  color:#C6CAD4 !important;
+}
+
+.avatar{
+      height: 129px !important;
+      width: 119px !important;
+}

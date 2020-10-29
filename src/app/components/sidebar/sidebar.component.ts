@@ -21,14 +21,7 @@ export const ROUTES: RouteInfo[] = [
     rtlTitle: 'الرموز',
     icon: 'icon-coins',
     class: ''
-  },
-  {
-    path: '/user',
-    title: 'user',
-    rtlTitle: 'الرموز',
-    icon: 'icon-coins',
-    class: ''
-  },
+  }
 
 ];
 

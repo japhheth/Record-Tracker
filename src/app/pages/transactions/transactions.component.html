@@ -13,7 +13,7 @@
   <!-- transaction Date Column -->
   <ng-container matColumnDef="transactionDate">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Date </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.transactionDate}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.transactionDate | date}} </mat-cell>
   </ng-container>
 
   <!-- Payee Name Column -->
@@ -25,7 +25,7 @@
   <!-- Amount Column -->
   <ng-container matColumnDef="amount">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+    <mat-cell *matCellDef="let element"><span>&#8358;</span> {{element.amount}} </mat-cell>
   </ng-container>
 
   <!-- memo Column -->

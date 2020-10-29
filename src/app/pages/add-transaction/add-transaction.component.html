@@ -4,7 +4,7 @@
   <div class="container form-wrapper">
      <div class="toolbar-div">
         <mat-toolbar class="toolbar-flex">
-          <span>{{authService.transactionForm.controls['$key'].value? 'Modify Transaction Record' : 'Add New Transaction Record' }}</span>
+          <span>{{authService.transactionForm.controls['$key'].value? 'Modify Record' : 'New Record' }}</span>
           <mat-icon class="clear-btn" matSuffix aria-label="close" (click)="onClose()">close</mat-icon>
       </mat-toolbar>
      </div>

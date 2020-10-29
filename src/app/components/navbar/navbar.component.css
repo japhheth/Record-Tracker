@@ -5,3 +5,9 @@
 }
 
 
+@media (max-width: 999px){
+  .navbar-wrapper{
+        margin-top: -53px !important;
+  }
+}
+
