@@ -20,6 +20,8 @@ export class AuthServiceService {
     memo: new FormControl('')
   });
 
+  // -------------- Clear all fields -----------
+
   inititializeFormGroup(){
     this.transactionForm.setValue({
       $key: null,
@@ -31,11 +33,14 @@ export class AuthServiceService {
     });
   }
 
+  // ------------- Get all transactions ------------------
+
   getTranactions(){
     this.transactionList = this.firebase.list('transactions');
     return this.transactionList.snapshotChanges();
   }
 
+  // ---------------- Add Transcation record ---------------------------------
   addTransaction(transaction: TransactionModels){
     this.transactionList = this.firebase.list('/transactions');
     if  (this.transactionList){
@@ -49,6 +54,7 @@ export class AuthServiceService {
     }
   }
 
+  // ----------------- Update Transaction Record ------------------------
   updateTransaction(transaction){
       this.transactionList.update(transaction.$key, {
         transactionDate: transaction.transactionDate === '' ? '' : this.pipe.transform(transaction.transactionDate, 'yyyy-MM-dd'),
@@ -58,9 +64,13 @@ export class AuthServiceService {
       });
   }
 
+   // ----------------- Delete Transaction Record ------------------------
+
   deleteTransaction($key: string){
     this.transactionList.remove($key);
   }
+
+  // ----------------- Populate Transaction Record on add transaction modal ------------------------
 
   populate(transactionData){
     this.transactionForm.setValue(transactionData);
